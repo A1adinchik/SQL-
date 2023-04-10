@@ -1,0 +1,118 @@
+1.
+SELECT *
+FROM public.stores
+
+2.
+SELECT DISTINCT region
+FROM stores
+
+3.
+SELECT DISTINCT name, surname
+FROM customers
+
+4.
+SELECT customer_id, store_id
+FROM sales
+WHERE customer_id IS NOT NULL;
+
+5.
+SELECT DISTINCT brand
+FROM products
+ORDER BY brand ASC;
+
+6.
+SELECT customer_id, EXTRACT(MONTH FROM birth_date) || '-' || EXTRACT(DAY FROM birth_date) AS birth_month_day
+FROM customers
+ORDER BY EXTRACT(MONTH FROM birth_date), EXTRACT(DAY FROM birth_date);
+
+7.
+SELECT region
+FROM stores
+ORDER BY region
+LIMIT 3 OFFSET 6;
+
+8.
+
+WHERE
+
+1.
+SELECT DISTINCT name
+FROM public.customers
+WHERE surname = 'Джигурда';
+
+2.
+SELECT DISTINCT address
+FROM stores
+WHERE region = 5
+ORDER BY address ASC
+
+3.
+SELECT DISTINCT product_id
+FROM sales
+WHERE customer_id = 69 AND sale_date = '2020-02-14';
+
+4.
+
+5.
+SELECT *
+FROM prices
+WHERE start_date >= '2020-02-01' AND end_date <= '2020-02-29';
+
+6.
+SELECT customer_id, name, surname 
+FROM customers 
+WHERE name LIKE 'К%' OR surname LIKE 'К%';
+
+7.
+SELECT DISTINCT customer_id
+FROM sales
+WHERE sale_date >= '2020-02-01' AND sale_date <= '2020-02-29'
+ORDER BY customer_id ASC;
+
+GROUP BY
+
+1.
+SELECT COUNT(*) as store_count
+FROM stores
+WHERE region = 5;
+
+2.
+SELECT product_id, AVG(price) AS avg_price
+FROM prices
+WHERE start_date >= '2020-01-01' AND end_date <= '2020-12-31'
+GROUP BY product_id
+ORDER BY product_id ASC;
+
+3.
+SELECT 
+    sale_date, 
+    COUNT(*) AS sales_count
+FROM sales 
+GROUP BY sale_date
+HAVING COUNT(*) > 1800
+
+4.
+
+
+
+5.
+SELECT 
+    TO_CHAR(sale_date, 'MM') AS month, 
+    COUNT(*) AS sales_count
+FROM sales 
+WHERE EXTRACT(YEAR FROM sale_date) = 2020
+GROUP BY month
+
+6.
+SELECT product_id, COUNT(*) as total_sales
+FROM sales
+WHERE customer_id IS NULL
+GROUP BY product_id
+ORDER BY total_sales DESC
+LIMIT 1;
+
+7.
+SELECT surname, COUNT(*) as n
+FROM customers
+WHERE surname IS NOT NULL
+GROUP BY surname;
